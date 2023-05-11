@@ -1,5 +1,7 @@
 import torch
 import random
+import pickle
+from Datasets import MNIST
 import torch.optim as optim
 from torch.utils.data import DataLoader
 """# SepSA and Adam, RMS, SGD, NAG import this."""
@@ -18,13 +20,6 @@ parser.add_argument("--lr", type=float, default=1e-3, help="learning rate")
 parser.add_argument("--memory_depth", type=int, default=0, help="memory_depth")
 args = parser.parse_args()
 
-# 从文件中读取数据集
-import pickle
-
-with open('Datasets/mnist.pickle', 'rb') as f:
-    loaded_data = pickle.load(f)
-train_set = loaded_data['train']
-test_set = loaded_data['test']
 
 result = {}
 train = []
@@ -44,10 +39,10 @@ for lr in [1e-3]:
 
     batch_size = args.batch_size
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
+    train_loader = DataLoader(MNIST.train_set, batch_size=batch_size, shuffle=True)
     """The calculation results of training error and test error are the same at any batch size."""
-    train_loader2 = DataLoader(train_set, batch_size=1000, shuffle=True)
-    test_loader = DataLoader(test_set, batch_size=1000, shuffle=False)
+    train_loader2 = DataLoader(MNIST.train_set, batch_size=1000, shuffle=True)
+    test_loader = DataLoader(MNIST.test_set, batch_size=1000, shuffle=False)
     # train_loader = DataLoader(MNIST.train_set, batch_size=batch_size, shuffle=True)
     # test_loader = DataLoader(MNIST.test_set, batch_size=batch_size, shuffle=False)
 
