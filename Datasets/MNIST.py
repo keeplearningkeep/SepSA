@@ -1,9 +1,7 @@
 from torchvision.datasets import MNIST
-# from torchvision.transforms import ToTensor, Normalize, Compose
 import torchvision.transforms as t
 from torch.utils.data import TensorDataset, DataLoader
 import torch.nn.functional as F
-import pickle
 
 # 数据预处理
 transform = t.Compose([
@@ -25,12 +23,9 @@ for i, (x, y) in enumerate(test):
     y_test = F.one_hot(y, num_classes=10)
 
 
-train = TensorDataset(x_train.float(), y_train.float())
-test = TensorDataset(x_test.float(), y_test.float())
+train_set = TensorDataset(x_train.float(), y_train.float())
+test_set = TensorDataset(x_test.float(), y_test.float())
 
-data = {'train': train, 'test': test}
-with open('mnist.pickle', 'wb') as f:
-    pickle.dump(data, f)
 
 
 
